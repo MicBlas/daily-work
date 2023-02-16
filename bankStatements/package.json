@@ -1,0 +1,14 @@
+{
+	"name": "bank",
+	"version": "1.0.0",
+	"description": "",
+	"main": "bank.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "micblas",
+	"license": "ISC",
+	"dependencies": {
+		"pkg": "^5.8.0"
+	}
+}
