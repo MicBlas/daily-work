@@ -9,6 +9,9 @@ const readline = require("readline").createInterface({
 async function controlSchedule() {
 	let answer = await monthOfData();
 	let mapOfSchedule = await checkOurSchedule();
+	let monday = await mondayInMonth(month, year);
+	let tuesday = await tuesdayInMonth(month, year);
+	let wednesday = await wednesdayInMonth(month, year);
 }
 controlSchedule();
 
@@ -74,5 +77,63 @@ function checkOurSchedule() {
 				resolve(map1);
 			}
 		});
+	});
+}
+
+function mondayInMonth(month, year) {
+	return new Promise(resolve => {
+		let days = new Date(year, month, 0).getDate(); //get the number of days of the month for the specified month
+		//the day number 0 (Sunday) to 6 (Saturday).
+		let monday = [(9 - new Date(month + "/01/" + year).getDay()) % 7];
+
+		//console.log(monday);
+		//getDay - Get weekday as a number (0-6)
+
+		for (let i = monday[0] + 7; i <= days; i += 7) {
+			//increase 7 days
+			monday.push(i);
+		}
+		for (let j = 0; j < monday.length; j++) {
+			if (monday[j] == 0) {
+				monday.splice(monday[j], 1);
+			}
+		}
+		resolve(monday.length);
+		//return monday;
+		//console.log(monday);
+	});
+}
+
+function tuesdayInMonth(month, year) {
+	return new Promise(resolve => {
+		let days = new Date(year, month, 0).getDate();
+		let tuesday = [(10 - new Date(month + "/01/" + year).getDay()) % 7];
+
+		for (let i = tuesday[0] + 7; i <= days; i += 7) {
+			tuesday.push(i);
+		}
+		for (let j = 0; j < tuesday.length; j++) {
+			if (tuesday[j] == 0) {
+				tuesday.splice(tuesday[j], 1);
+			}
+		}
+		resolve(tuesday.length);
+	});
+}
+
+function wednesdayInMonth(month, year) {
+	return new Promise(resolve => {
+		let days = new Date(year, month, 0).getDate();
+		let wednesday = [(11 - new Date(month + "/01/" + year).getDay()) % 7];
+		//let wednesdays = [];
+		for (let i = wednesday[0] + 7; i <= days; i += 7) {
+			wednesday.push(i);
+		}
+		for (let j = 0; j < wednesday.length; j++) {
+			if (wednesday[j] == 0) {
+				wednesday.splice(wednesday[j], 1);
+			}
+		}
+		resolve(wednesday.length);
 	});
 }
