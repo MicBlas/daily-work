@@ -12,6 +12,10 @@ async function controlSchedule() {
 	let monday = await mondayInMonth(month, year);
 	let tuesday = await tuesdayInMonth(month, year);
 	let wednesday = await wednesdayInMonth(month, year);
+	let thursday = await thursdayInMonth(month, year);
+	let friday = await fridayInMonth(month, year);
+	let saturday = await saturdayInMonth(month, year);
+	let sunday = await sundayInMonth(month, year);
 }
 controlSchedule();
 
@@ -135,5 +139,72 @@ function wednesdayInMonth(month, year) {
 			}
 		}
 		resolve(wednesday.length);
+	});
+}
+unction thursdayInMonth(month, year) {
+	return new Promise(resolve => {
+		let days = new Date(year, month, 0).getDate();
+		let thursday = [(12 - new Date(month + "/01/" + year).getDay()) % 7];
+
+		for (let i = thursday[0] + 7; i <= days; i += 7) {
+			thursday.push(i);
+		}
+		for (let j = 0; j < thursday.length; j++) {
+			if (thursday[j] == 0) {
+				thursday.splice(thursday[j], 1);
+			}
+		}
+		resolve(thursday.length);
+	});
+}
+function fridayInMonth(month, year) {
+	return new Promise(resolve => {
+		let days = new Date(year, month, 0).getDate();
+		let friday = [(13 - new Date(month + "/01/" + year).getDay()) % 7];
+
+		for (let i = friday[0] + 7; i <= days; i += 7) {
+			friday.push(i);
+		}
+		for (let j = 0; j < friday.length; j++) {
+			if (friday[j] == 0) {
+				friday.splice(friday[j], 1);
+			}
+		}
+		resolve(friday.length);
+	});
+}
+function saturdayInMonth(month, year) {
+	return new Promise(resolve => {
+		let days = new Date(year, month, 0).getDate();
+		let saturday = [(14 - new Date(month + "/01/" + year).getDay()) % 7];
+
+		for (let i = saturday[0] + 7; i <= days; i += 7) {
+			saturday.push(i);
+		}
+		for (let j = 0; j < saturday.length; j++) {
+			if (saturday[j] == 0) {
+				saturday.splice(saturday[j], 1);
+			}
+		}
+
+		resolve(saturday.length);
+	});
+}
+function sundayInMonth(month, year) {
+	return new Promise(resolve => {
+		let days = new Date(year, month, 0).getDate();
+		let sunday = [(15 - new Date(month + "/01/" + year).getDay()) % 7];
+		//let sundays = sunday;
+
+		for (let i = sunday[0] + 7; i <= days; i += 7) {
+			sunday.push(i);
+		}
+		for (let j = 0; j < sunday.length; j++) {
+			if (sunday[j] == 0) {
+				sunday.splice(sunday[j], 1);
+			}
+		}
+
+		resolve(sunday.length);
 	});
 }
