@@ -8,7 +8,9 @@ const readline = require("readline").createInterface({
 
 async function controlSchedule() {
 	let answer = await monthOfData();
-	let mapOfSchedule = await checkOurSchedule();
+	let month = answer[0];
+	let year = answer[1];
+	//let mapOfSchedule = await checkOurSchedule();
 	let monday = await mondayInMonth(month, year);
 	let tuesday = await tuesdayInMonth(month, year);
 	let wednesday = await wednesdayInMonth(month, year);
@@ -26,9 +28,12 @@ function monthOfData() {
 			"What month is the data for? Please, enter date in format: mm-yyyy e.g. 01-2023:" +
 				"\n" +
 				"\n",
+
 			answer => {
-				value = answer;
-				resolve(value);
+				let answerMonth = answer.substring(0, 2);
+				let answerYear = answer.substring(3);
+				let date = [answerMonth, answerYear];
+				resolve(date);
 				//readline.close();
 			}
 		);
@@ -206,5 +211,6 @@ function sundayInMonth(month, year) {
 		}
 
 		resolve(sunday.length);
+		//console.log(sunday.length);
 	});
 }
