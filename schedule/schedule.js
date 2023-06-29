@@ -10,7 +10,7 @@ async function controlSchedule() {
 	let answer = await monthOfData();
 	let month = answer[0];
 	let year = answer[1];
-	//let mapOfSchedule = await checkOurSchedule();
+	let mapOfSchedule = await checkOurSchedule();
 	let monday = await mondayInMonth(month, year);
 	let tuesday = await tuesdayInMonth(month, year);
 	let wednesday = await wednesdayInMonth(month, year);
@@ -82,7 +82,7 @@ function checkOurSchedule() {
 					}
 					map1.set(mpk, daysForAgency);
 				}
-				//console.log(map1);
+				console.log(map1);
 				resolve(map1);
 			}
 		});
@@ -214,3 +214,46 @@ function sundayInMonth(month, year) {
 		//console.log(sunday.length);
 	});
 }
+
+//CHECK CLIENT SCHEDULE - 'raport.csv'
+
+function checkClientSchedule() {
+	return new Promise(resolve => {
+		//READ DATA FROM CSV
+
+		let pharmacy = fs.readFile("./raport.csv", "utf8", (err, data) => {
+			if (err) {
+				console.error(err);
+			} else {
+				let stringToArray = data.split("\r\n");
+
+				let mapClient = new Map();
+				//let arrival = [];//delete
+				let arrival = new Map();
+				let counter = 0;
+				for (let i = 1; i < stringToArray.length; i++) {
+					let stringToArray2 = stringToArray[i].split(";"); //separate mpk
+					let mpkClient = stringToArray2[2].substring(8);
+					let correctPoint = stringToArray2[12];
+					let daysForThemItem = [];
+
+					if (
+						correctPoint.includes("odbi") ||
+						correctPoint.includes("pakiet")
+					) {
+						if (arrival.has(mpkClient) == true) {
+							counter = arrival.get(mpkClient) + 1;
+							arrival.set(mpkClient, counter);
+						} else {
+							counter = 1;
+							arrival.set(mpkClient, counter);
+						}
+					}
+				}
+				resolve(arrival);
+				console.log(arrival);
+			}
+		});
+	});
+}
+checkClientSchedule();
