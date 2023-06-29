@@ -141,7 +141,7 @@ function wednesdayInMonth(month, year) {
 		resolve(wednesday.length);
 	});
 }
-unction thursdayInMonth(month, year) {
+function thursdayInMonth(month, year) {
 	return new Promise(resolve => {
 		let days = new Date(year, month, 0).getDate();
 		let thursday = [(12 - new Date(month + "/01/" + year).getDay()) % 7];
