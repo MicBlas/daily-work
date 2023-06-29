@@ -10,14 +10,25 @@ async function controlSchedule() {
 	let answer = await monthOfData();
 	let month = answer[0];
 	let year = answer[1];
-	let mapOfSchedule = await checkOurSchedule();
-	let monday = await mondayInMonth(month, year);
+	let mapOfSchedule = await checkOurSchedule(); //when arrivals should be done
+	let monday = await mondayInMonth(month, year); //how many mondays was in a month
 	let tuesday = await tuesdayInMonth(month, year);
 	let wednesday = await wednesdayInMonth(month, year);
 	let thursday = await thursdayInMonth(month, year);
 	let friday = await fridayInMonth(month, year);
 	let saturday = await saturdayInMonth(month, year);
 	let sunday = await sundayInMonth(month, year);
+	let realArrivals = checkClientSchedule(); //how many times Contractor was in a particular point
+	let realMap = await arrivalTogether( how many times Contractor should be in point //CHECK !!!!
+		monday, //how many mondays was in a month
+		tuesday,
+		wednesday,
+		thursday,
+		friday,
+		saturday,
+		sunday,
+		mapOfSchedule //when arrivals should be done
+	);
 }
 controlSchedule();
 
@@ -82,7 +93,7 @@ function checkOurSchedule() {
 					}
 					map1.set(mpk, daysForAgency);
 				}
-				console.log(map1);
+				//console.log(map1);
 				resolve(map1);
 			}
 		});
@@ -109,7 +120,7 @@ function mondayInMonth(month, year) {
 		}
 		resolve(monday.length);
 		//return monday;
-		//console.log(monday);
+		//console.log(monday.length);
 	});
 }
 
@@ -215,8 +226,7 @@ function sundayInMonth(month, year) {
 	});
 }
 
-//CHECK CLIENT SCHEDULE - 'raport.csv'
-
+//CHECK CONTRACTOR SCHEDULE - 'raport.csv' - HOW MANY TIMES CONTRACTOR WAS IN A POINT
 function checkClientSchedule() {
 	return new Promise(resolve => {
 		//READ DATA FROM CSV
@@ -256,4 +266,3 @@ function checkClientSchedule() {
 		});
 	});
 }
-checkClientSchedule();
