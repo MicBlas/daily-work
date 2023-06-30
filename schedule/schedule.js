@@ -19,7 +19,8 @@ async function controlSchedule() {
 	let saturday = await saturdayInMonth(month, year);
 	let sunday = await sundayInMonth(month, year);
 	let realArrivals = checkClientSchedule(); //how many times Contractor was in a particular point
-	let realMap = await arrivalTogether( how many times Contractor should be in point //CHECK !!!!
+	let realMap = await arrivalTogether(
+		//how many times Contractor should be in a point //CHECK !!!!
 		monday, //how many mondays was in a month
 		tuesday,
 		wednesday,
@@ -93,7 +94,7 @@ function checkOurSchedule() {
 					}
 					map1.set(mpk, daysForAgency);
 				}
-				//console.log(map1);
+				console.log(map1);
 				resolve(map1);
 			}
 		});
@@ -261,8 +262,56 @@ function checkClientSchedule() {
 					}
 				}
 				resolve(arrival);
-				console.log(arrival);
+				//console.log(arrival);
 			}
 		});
+	});
+}
+
+//CHECK HOW MANY TIMES CONTRACTOR SHOULD BE IN A POINT
+function arrivalTogether(
+	monday, //how many mondays was in a month
+	tuesday,
+	wednesday,
+	thursday,
+	friday,
+	saturday,
+	sunday,
+	mapOfSchedule //when arrivals should be done e.g. [1] => [1,2,3]
+) {
+	return new Promise(resolve => {
+		let realMap = new Map();
+		for (let key of mapOfSchedule) {
+			let counter = 0;
+			//if (key.value === 1) {
+			for (let i = 0; i < key[0].length; i++) {
+				if (key[1][i] == 1) {
+					counter += monday;
+				}
+				if (key[1][i] == 2) {
+					counter += tuesday;
+				}
+				if (key[1][i] == 3) {
+					counter += wednesday;
+				}
+				if (key[1][i] == 4) {
+					counter += thursday;
+				}
+				if (key[1][i] == 5) {
+					counter += friday;
+				}
+				if (key[1][i] == 6) {
+					counter += saturday;
+				}
+				if (key[1][i] == 0) {
+					counter += sunday;
+				}
+			}
+			realMap.set(key[0], counter);
+			//resolve(realMap);
+
+			//}
+		}
+		console.log(realMap);
 	});
 }
